@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=4 uid="uid://nrsk5vfxsh1f"]
+
+[ext_resource type="Script" uid="uid://bgvt4505q7und" path="res://Skripts/camera_2d.gd" id="1_0hol4"]
+[ext_resource type="PackedScene" uid="uid://cqdt4a56rnve2" path="res://Scenes/Pawn.tscn" id="1_epypp"]
+[ext_resource type="Texture2D" uid="uid://b3syl7ue6bsra" path="res://Free/Tile/Tileset1.png" id="1_wtcfe"]
+[ext_resource type="Script" uid="uid://c5dfh1q131i15" path="res://Skripts/tile_map_layer.gd" id="2_0e48y"]
+[ext_resource type="Script" uid="uid://dppepxre8isou" path="res://Skripts/map_generator.gd" id="2_u7krg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e48y"]
+resource_name = "Hexes"
+texture = ExtResource("1_wtcfe")
+texture_region_size = Vector2i(32, 32)
+0:0/next_alternative_id = 2
+0:0/0 = 0
+0:0/1 = 1
+0:2/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+0:13/0 = 0
+1:13/0 = 0
+0:14/0 = 0
+1:14/0 = 0
+0:15/0 = 0
+1:15/0 = 0
+0:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_epypp"]
+tile_shape = 3
+tile_layout = 5
+tile_size = Vector2i(31, 21)
+custom_data_layer_0/name = "IsExist"
+custom_data_layer_0/type = 28
+sources/0 = SubResource("TileSetAtlasSource_0e48y")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.5, 2.5)
+script = ExtResource("1_0hol4")
+
+[node name="MapGenerator" type="Node" parent="."]
+script = ExtResource("2_u7krg")
+
+[node name="TileMapPlate" type="Node2D" parent="."]
+
+[node name="GrassTileLayer" type="TileMapLayer" parent="TileMapPlate"]
+tile_map_data = PackedByteArray("AAAAAAEAAAAAAAIAAAD//wEAAAAAAAIAAAD//wAAAAAAAAIAAAAAAAAAAAAAAAIAAAABAAAAAAAAAAIAAAABAP//AAAAAAIAAAAAAP//AAAAAAIAAAD9/wIAAAAAAAIAAAD9/wMAAAAAAAIAAAD+/wMAAAAAAAIAAAD9/wEAAAAAAAIAAAD+/wAAAAAAAAIAAAD/////AAAAAAIAAAD//wMAAAAAAAIAAAAAAAIAAAAAAAIAAAACAPz/AAAAAAIAAAADAPz/AAAAAAIAAAAEAPz/AAAAAAIAAAAEAP3/AAAAAAIAAAAFAP3/AAAAAAIAAAAFAPz/AAAAAAIAAAAFAPv/AAAAAAIAAAAEAPv/AAAAAAIAAAAEAPr/AAAAAAIAAAADAPv/AAAAAAIAAAA=")
+tile_set = SubResource("TileSet_epypp")
+
+[node name="WaterTileLayer" type="TileMapLayer" parent="TileMapPlate"]
+z_as_relative = false
+tile_map_data = PackedByteArray("AAD+/wEAAAAAAAEAAAD//wIAAAAAAAEAAAD+/wIAAAAAAAEAAAACAP//AAAAAAEAAAACAP7/AAAAAAEAAAABAP7/AAAAAAEAAAAAAP7/AAAAAAEAAAABAP3/AAAAAAEAAAACAP3/AAAAAAEAAAADAP3/AAAAAAEAAAADAP7/AAAAAAEAAAA=")
+tile_set = SubResource("TileSet_epypp")
+script = ExtResource("2_0e48y")
+
+[node name="Pawn" parent="." instance=ExtResource("1_epypp")]
+
+[node name="PawnAgent" parent="Pawn" index="1" node_paths=PackedStringArray("tileMap")]
+tileMap = NodePath("../../TileMapPlate/GrassTileLayer")
+offSet = Vector2(0, -10)
+
+[editable path="Pawn"]

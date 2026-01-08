@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://cqdt4a56rnve2"]
+
+[ext_resource type="Script" uid="uid://dmy8qk4oc62gu" path="res://Scenes/pawn.gd" id="1_0840t"]
+[ext_resource type="Texture2D" uid="uid://cd2fxem56dqxr" path="res://Free/Characters/kare01.png" id="1_soa38"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iexdo"]
+atlas = ExtResource("1_soa38")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q4exq"]
+atlas = ExtResource("1_soa38")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i26xp"]
+atlas = ExtResource("1_soa38")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxy7p"]
+atlas = ExtResource("1_soa38")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8bt4"]
+atlas = ExtResource("1_soa38")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhw20"]
+atlas = ExtResource("1_soa38")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n0igd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iexdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q4exq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i26xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bxy7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u8bt4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhw20")
+}],
+"loop": true,
+"name": &"pawn_idle",
+"speed": 5.0
+}]
+
+[node name="Pawn" type="CharacterBody2D"]
+script = ExtResource("1_0840t")
+
+[node name="PathPreviz" type="Line2D" parent="."]
+top_level = true
+
+[node name="PawnSprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -29.999998)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_n0igd")
+animation = &"pawn_idle"
+
+[node name="PawnAgent" type="Node2D" parent="."]
