@@ -44,7 +44,7 @@ script = ExtResource("1_0hol4")
 [node name="MapGenerator" type="Node" parent="." unique_id=1179136540]
 script = ExtResource("2_u7krg")
 map_resolution = 64
-noise_scale = 0.01
+noise_scale = 0.05
 
 [node name="TileMapPlate" type="Node2D" parent="." unique_id=222573453]
 script = ExtResource("3_u7krg")
