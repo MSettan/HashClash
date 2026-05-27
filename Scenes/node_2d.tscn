@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://nrsk5vfxsh1f"]
+[gd_scene format=4 uid="uid://nrsk5vfxsh1f"]
 
 [ext_resource type="Script" uid="uid://bgvt4505q7und" path="res://Skripts/camera_2d.gd" id="1_0hol4"]
 [ext_resource type="PackedScene" uid="uid://cqdt4a56rnve2" path="res://Scenes/Pawn.tscn" id="1_epypp"]
@@ -14,9 +14,7 @@
 texture = ExtResource("5_tx0tn")
 texture_region_size = Vector2i(160, 160)
 0:0/0 = 0
-0:0/0/texture_origin = Vector2i(-6, 8)
 0:1/0 = 0
-0:1/0/texture_origin = Vector2i(-6, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e48y"]
 resource_name = "Hexes"
@@ -37,30 +35,33 @@ custom_data_layer_0/type = 28
 sources/2 = SubResource("TileSetAtlasSource_0e48y")
 sources/0 = SubResource("TileSetAtlasSource_wjtap")
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" unique_id=1086567959]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=761285199]
 zoom = Vector2(2.5, 2.5)
 script = ExtResource("1_0hol4")
 
-[node name="MapGenerator" type="Node" parent="."]
+[node name="MapGenerator" type="Node" parent="." unique_id=1179136540]
 script = ExtResource("2_u7krg")
+map_resolution = 64
+noise_scale = 0.01
 
-[node name="TileMapPlate" type="Node2D" parent="."]
+[node name="TileMapPlate" type="Node2D" parent="." unique_id=222573453]
 script = ExtResource("3_u7krg")
 
-[node name="TileBoard" type="TileMapLayer" parent="TileMapPlate"]
+[node name="TileBoard" type="TileMapLayer" parent="TileMapPlate" unique_id=578083037]
 y_sort_enabled = true
 tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAD//wAAAAAAAAAAAAD/////AAAAAAAAAAAAAP//AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=")
 tile_set = SubResource("TileSet_epypp")
 script = ExtResource("6_wjtap")
+reachable_tile_lift = Vector2i(0, 6)
 
-[node name="NavigationSystem" type="Node2D" parent="TileMapPlate"]
+[node name="NavigationSystem" type="Node2D" parent="TileMapPlate" unique_id=1435796674]
 script = ExtResource("7_hvaui")
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=913976866]
 
-[node name="GridDisplay" type="Control" parent="HUD"]
+[node name="GridDisplay" type="Control" parent="HUD" unique_id=735435955]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
 anchors_preset = 0
@@ -70,7 +71,7 @@ offset_right = 1301.0
 offset_bottom = 731.0
 script = ExtResource("11_2ooml")
 
-[node name="CheckBox" type="CheckBox" parent="HUD/GridDisplay"]
+[node name="CheckBox" type="CheckBox" parent="HUD/GridDisplay" unique_id=982257825]
 layout_mode = 0
 offset_left = 153.0
 offset_top = 81.0
@@ -79,7 +80,7 @@ offset_bottom = 112.0
 text = "show grid
 "
 
-[node name="Pawn" parent="." instance=ExtResource("1_epypp")]
+[node name="Pawn" parent="." unique_id=359594210 instance=ExtResource("1_epypp")]
 position = Vector2(400, 178)
 
 [connection signal="data_noise_to_tiles" from="MapGenerator" to="TileMapPlate" method="_on_map_generator_data_noise_to_tiles"]

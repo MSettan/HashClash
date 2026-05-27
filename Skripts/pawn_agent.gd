@@ -19,7 +19,7 @@ func _move():
 	var mousePosition = get_global_mouse_position()
 	var isTargetPositionValid = get_tile_global_position(mousePosition)
 	
-	if not isTargetPositionValid: return
+	if isTargetPositionValid == null: return
 
 	isMoving = true
 	
@@ -53,12 +53,12 @@ func _get_route(targetPosition):
 	var direction = tileMap.local_to_map(targetPosition) - tileMap.local_to_map(global_position)
 	var currentTilePosition = tileMap.local_to_map(global_position)
 
-	while direction:
+	while direction != Vector2i.ZERO:
 		var newPoint = snap(direction, 1)
 
 		# forbid running directly up or down
 		# forbid (1,1) and (-1,-1)
-		if newPoint.x and newPoint.y and newPoint.x == newPoint.y:
+		if newPoint.x != 0 and newPoint.y != 0 and newPoint.x == newPoint.y:
 			var checkPoint = Vector2i(0, newPoint.y)
 			
 			if not _has_tile(currentTilePosition + checkPoint):
