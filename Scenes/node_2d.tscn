@@ -80,9 +80,17 @@ offset_bottom = 112.0
 text = "show grid
 "
 
+[node name="ButtonRegenerateMap" type="Button" parent="HUD" unique_id=1398724681]
+offset_left = 176.0
+offset_top = 62.0
+offset_right = 287.0
+offset_bottom = 90.0
+text = "Regenerate map"
+
 [node name="Pawn" parent="." unique_id=359594210 instance=ExtResource("1_epypp")]
 position = Vector2(400, 178)
 
 [connection signal="data_noise_to_tiles" from="MapGenerator" to="TileMapPlate" method="_on_map_generator_data_noise_to_tiles"]
 [connection signal="tiles_type" from="TileMapPlate" to="TileMapPlate/NavigationSystem" method="_on_tile_map_plate_tiles_type"]
 [connection signal="toggled" from="HUD/GridDisplay/CheckBox" to="HUD/GridDisplay" method="toggle_grid_display"]
+[connection signal="pressed" from="HUD/ButtonRegenerateMap" to="MapGenerator" method="_on_button_regenerate_map_pressed"]

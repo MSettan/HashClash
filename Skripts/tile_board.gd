@@ -10,7 +10,7 @@ const BLUE_TILE = Vector2i(0, 1)
 
 var reachable_cells: Dictionary = {}
 var cells_to_update: Dictionary = {}
-var hovered_cell: Vector2i = Vector2i(-999999, -999999)
+var hovered_cell: Vector2i = Vector2i(-10, -10)
 
 func set_reachable_cells(cells: Array[Vector2i]) -> void:
 	cells_to_update.clear()

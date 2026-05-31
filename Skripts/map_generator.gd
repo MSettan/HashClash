@@ -35,3 +35,6 @@ func _ready() -> void:
 
 func send_array():
 	data_noise_to_tiles.emit(noise_to_tiles, map_resolution)
+
+func _on_button_regenerate_map_pressed() -> void:
+	generate_map()
