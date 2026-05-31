@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cbhyqa3ly5g4p" path="res://textures/Hexes.png" id="5_tx0tn"]
 [ext_resource type="Script" uid="uid://b61vhng4r8fjt" path="res://Skripts/tile_board.gd" id="6_wjtap"]
 [ext_resource type="Script" uid="uid://nuth1s6kvelm" path="res://Skripts/navigation_system.gd" id="7_hvaui"]
+[ext_resource type="Script" uid="uid://c7kqj4sxq6brn" path="res://Skripts/player.gd" id="8_player"]
 [ext_resource type="Script" uid="uid://1tu7a7ynf0iy" path="res://Skripts/grid_display.gd" id="11_2ooml"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wjtap"]
@@ -65,10 +66,9 @@ script = ExtResource("7_hvaui")
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 21.0
-offset_top = 11.0
-offset_right = 1301.0
-offset_bottom = 731.0
+offset_top = 22.0
+offset_right = 1280.0
+offset_bottom = 742.0
 script = ExtResource("11_2ooml")
 
 [node name="CheckBox" type="CheckBox" parent="HUD/GridDisplay" unique_id=982257825]
@@ -87,7 +87,12 @@ offset_right = 287.0
 offset_bottom = 90.0
 text = "Regenerate map"
 
-[node name="Pawn" parent="." unique_id=359594210 instance=ExtResource("1_epypp")]
+[node name="Players" type="Node2D" parent="." unique_id=-332408063]
+
+[node name="Player" type="Node2D" parent="Players" unique_id=1060184785]
+script = ExtResource("8_player")
+
+[node name="Pawn" parent="Players/Player" unique_id=359594210 instance=ExtResource("1_epypp")]
 position = Vector2(400, 178)
 
 [connection signal="data_noise_to_tiles" from="MapGenerator" to="TileMapPlate" method="_on_map_generator_data_noise_to_tiles"]

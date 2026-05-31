@@ -41,7 +41,7 @@ func send_types_of_tiles():
 				astar.connect_points(point_id, neighbor_id)
 
 	$"../../HUD/GridDisplay".setup(tile_board, walkable_cells, map_resolution)
-	$"../../Pawn".setup(tile_board, self)
+	_setup_players()
 
 func _on_tile_map_plate_tiles_type(data: Array[Vector2i], resolution: int) -> void:
 	types_of_tiles = data
@@ -126,6 +126,17 @@ func _resolve_tile_board() -> void:
 		return
 
 	tile_board = get_node_or_null("../TileBoard") as TileMapLayer
+
+func _setup_players() -> void:
+	var players_root := get_node_or_null("../../Players")
+	if players_root == null:
+		push_error("HexNavigationSystem cannot find ../../Players.")
+		return
+
+	for child in players_root.get_children():
+		var player := child as Player
+		if player != null:
+			player.setup(tile_board, self)
 
 func _get_hex_neighbors(cell: Vector2i) -> Array[Vector2i]:
 	var neighbors: Array[Vector2i] = []

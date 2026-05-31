@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Pawn
 
 @export var move_time_per_tile: float = 0.18
 @export var snap_offset: Vector2 = Vector2(0, -6)
@@ -10,6 +11,7 @@ var current_cell: Vector2i
 var target_cell: Vector2i
 var movement_points_left: int
 var is_moving := false
+var is_active := true
 var last_mouse_viewport_position: Vector2 = Vector2.ZERO
 
 func setup(_tile_board: TileMapLayer, _navigation_system: HexNavigationSystem) -> void:
@@ -19,7 +21,8 @@ func setup(_tile_board: TileMapLayer, _navigation_system: HexNavigationSystem) -
 	current_cell = navigation_system.get_random_walkable_cell()
 	target_cell = current_cell
 	global_position = _cell_to_global(current_cell)
-	_update_reachable_tiles()
+	if is_active:
+		_update_reachable_tiles()
 
 func _ready() -> void:
 	$PawnSprite.play("pawn_idle")
@@ -29,7 +32,7 @@ func _ready() -> void:
 	$PathPreviz.global_scale = Vector2.ONE
 
 func _input(event: InputEvent) -> void:
-	if tile_board == null or navigation_system == null:
+	if not is_active or tile_board == null or navigation_system == null:
 		return
 
 	if event is InputEventMouse:
@@ -40,7 +43,7 @@ func _input(event: InputEvent) -> void:
 		_move_to_mouse()
 
 func _process(_delta: float) -> void:
-	if tile_board == null or navigation_system == null:
+	if not is_active or tile_board == null or navigation_system == null:
 		return
 
 	_update_path_preview()
@@ -102,7 +105,28 @@ func _update_path_preview() -> void:
 
 func reset_turn() -> void:
 	movement_points_left = movement_points_per_turn
-	_update_reachable_tiles()
+	if is_active:
+		_update_reachable_tiles()
+
+func set_active(value: bool) -> void:
+	if is_active == value:
+		return
+
+	is_active = value
+	if has_node("PathPreviz"):
+		$PathPreviz.clear_points()
+
+	if tile_board == null:
+		return
+
+	if is_active:
+		_update_reachable_tiles()
+	else:
+		tile_board.clear_reachable_cells()
+
+func refresh_reachable_tiles() -> void:
+	if is_active:
+		_update_reachable_tiles()
 
 func _cell_to_global(cell: Vector2i) -> Vector2:
 	return tile_board.to_global(tile_board.map_to_local(cell)) + snap_offset
