@@ -16,7 +16,7 @@ func setup(_tile_board: TileMapLayer, _navigation_system: HexNavigationSystem) -
 	tile_board = _tile_board
 	navigation_system = _navigation_system
 	movement_points_left = movement_points_per_turn
-	current_cell = navigation_system.get_nearest_walkable_cell(tile_board.local_to_map(tile_board.to_local(global_position)))
+	current_cell = navigation_system.get_random_walkable_cell()
 	target_cell = current_cell
 	global_position = _cell_to_global(current_cell)
 	_update_reachable_tiles()

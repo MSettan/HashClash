@@ -31,6 +31,7 @@ func generate_map():
 	send_array()
 
 func _ready() -> void:
+	randomize()
 	generate_map.call_deferred()
 
 func send_array():

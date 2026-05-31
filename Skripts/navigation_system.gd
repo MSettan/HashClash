@@ -109,6 +109,15 @@ func get_nearest_walkable_cell(cell: Vector2i) -> Vector2i:
 
 	return best_cell
 
+func get_random_walkable_cell() -> Vector2i:
+	var cells := walkable_cells.keys()
+	if cells.size() == 0:
+		return Vector2i.ZERO
+
+	var random_index: int = randi() % cells.size()
+	var random_cell: Vector2i = cells[random_index]
+	return random_cell
+
 func _cell_id(cell: Vector2i) -> int:
 	return cell.x + cell.y * map_resolution
 
