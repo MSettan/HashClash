@@ -8,6 +8,9 @@ extends TileMapLayer
 
 const BLUE_TILE = Vector2i(0, 1)
 
+var islands: Dictionary = {}
+
+
 var reachable_cells: Dictionary = {}
 var cells_to_update: Dictionary = {}
 var hovered_cell: Vector2i = Vector2i(-10, -10)

@@ -118,6 +118,16 @@ func get_random_walkable_cell() -> Vector2i:
 	var random_cell: Vector2i = cells[random_index]
 	return random_cell
 
+func get_random_spawn_cell() -> Vector2i:
+	var tile_map_plate := get_parent()
+	if tile_map_plate != null and tile_map_plate.has_method("get_random_big_island_cell"):
+		var spawn_cell: Vector2i = tile_map_plate.get_random_big_island_cell()
+		if is_cell_walkable(spawn_cell):
+			return spawn_cell
+
+	push_warning("No valid big-island spawn was found.")
+	return Vector2i(-1, -1)
+
 func _cell_id(cell: Vector2i) -> int:
 	return cell.x + cell.y * map_resolution
 
@@ -140,12 +150,34 @@ func _setup_players() -> void:
 
 func _get_hex_neighbors(cell: Vector2i) -> Array[Vector2i]:
 	var neighbors: Array[Vector2i] = []
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_RIGHT_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_BOTTOM_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_LEFT_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_TOP_LEFT_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_TOP_SIDE))
-	neighbors.append(tile_board.get_neighbor_cell(cell, TileSet.CELL_NEIGHBOR_TOP_RIGHT_SIDE))
+	var offsets := _get_hex_neighbor_offsets(cell)
+
+	for offset in offsets:
+		var neighbor_cell := cell + offset
+		if _is_cell_inside_map(neighbor_cell):
+			neighbors.append(neighbor_cell)
+
 	return neighbors
+
+func _get_hex_neighbor_offsets(cell: Vector2i) -> Array[Vector2i]:
+	if cell.y % 2 == 0:
+		return [
+			Vector2i(1, 0),
+			Vector2i(0, 1),
+			Vector2i(0, -1),
+			Vector2i(-1, 0),
+			Vector2i(-1, 1),
+			Vector2i(-1, -1),
+		]
+
+	return [
+		Vector2i(1, 0),
+		Vector2i(1, 1),
+		Vector2i(1, -1),
+		Vector2i(-1, 0),
+		Vector2i(0, 1),
+		Vector2i(0, -1),
+	]
+
+func _is_cell_inside_map(cell: Vector2i) -> bool:
+	return cell.x >= 0 and cell.y >= 0 and cell.x < map_resolution and cell.y < map_resolution

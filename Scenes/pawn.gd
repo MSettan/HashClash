@@ -18,7 +18,13 @@ func setup(_tile_board: TileMapLayer, _navigation_system: HexNavigationSystem) -
 	tile_board = _tile_board
 	navigation_system = _navigation_system
 	movement_points_left = movement_points_per_turn
-	current_cell = navigation_system.get_random_walkable_cell()
+	current_cell = navigation_system.get_random_spawn_cell()
+	if not navigation_system.is_cell_walkable(current_cell):
+		push_warning("Pawn could not spawn because no big-island cell is available.")
+		visible = false
+		return
+
+	visible = true
 	target_cell = current_cell
 	global_position = _cell_to_global(current_cell)
 	if is_active:
